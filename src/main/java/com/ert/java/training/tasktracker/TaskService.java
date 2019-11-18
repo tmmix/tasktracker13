@@ -1,5 +1,10 @@
 package com.ert.java.training.tasktracker;
 
+import org.w3c.dom.ls.LSOutput;
+
+import java.sql.SQLOutput;
+import java.util.function.Consumer;
+
 public class TaskService {
     private TaskRepository taskRepository;
 
@@ -41,6 +46,30 @@ public class TaskService {
         } else {
             throw new TaskException("Задача " + id + " не найдена");
         }
+    }
+
+    public void printTasksByStatus(Task.Status status) {
+        taskRepository.getTasksByStatus(status).stream().forEach(task -> System.out.println(task.taskInfo()));
+    }
+
+    public void setTaskStatus(Long id, Task.Status status) {
+        taskRepository.setTaskStatus(id, status);
+    }
+
+    public void checkTaskById(Long id) {
+        if(taskRepository.taskIdExists(id)) {
+            System.out.println("Задача с id=" + id + " существует.");
+        } else {
+            System.out.println("Задачи с id=" + id + " не найдено.");
+        };
+    }
+
+    public void printTasksSortedByStatus(){
+        taskRepository.getTasksSortedByStatus().stream().forEach(task -> System.out.println(task.taskInfo()));
+    }
+
+    public void printNumberOfTasksWithStatus(Task.Status status) {
+        System.out.println("Количество задач со статусом \"" + status.getRusTitle() + "\" = " + taskRepository.countTasksByStatus(status));
     }
 
 

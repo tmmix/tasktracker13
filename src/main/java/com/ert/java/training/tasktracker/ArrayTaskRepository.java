@@ -1,7 +1,9 @@
 package com.ert.java.training.tasktracker;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Iterator;
+import java.util.stream.Collectors;
 
 public class ArrayTaskRepository implements TaskRepository{
     private ArrayList<Task> taskArray;
@@ -83,8 +85,28 @@ public class ArrayTaskRepository implements TaskRepository{
         return taskArray;
     }
 
+    @Override
+    public ArrayList<Task> getTasksByStatus(Task.Status status) {
+        return (ArrayList<Task>) taskArray.stream().filter(t -> t.getStatus() == status).collect(Collectors.toList());
+    }
 
+    @Override
+    public void setTaskStatus(Long id, Task.Status status) {
+        findById(id).setStatus(status);
+    }
 
+    @Override
+    public boolean taskIdExists(Long id) {
+        return taskArray.stream().filter(task -> task.getId() == id).count() == 1;
+    }
 
+    @Override
+    public ArrayList<Task> getTasksSortedByStatus() {
+        return (ArrayList<Task>) taskArray.stream().sorted((o1, o2) -> o1.getStatus().getOrderNum() - o2.getStatus().getOrderNum()).collect(Collectors.toList());
+    }
 
+    @Override
+    public long countTasksByStatus(Task.Status status) {
+        return taskArray.stream().filter(task -> task.getStatus() == status).count();
+    }
 }

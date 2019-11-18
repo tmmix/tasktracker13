@@ -27,5 +27,14 @@ public class MainApp {
             System.out.println("Поймали ошибку: " + e.getMessage());
         }
         taskService.printTaskList();
+        System.out.println();
+        taskService.setTaskStatus(8L, Task.Status.IN_PROGRESS);
+        taskService.setTaskStatus(6L, Task.Status.REJECTED);
+        taskService.setTaskStatus(5L, Task.Status.DONE);
+        taskService.setTaskStatus(7L, Task.Status.DONE);
+        taskService.printTasksByStatus(Task.Status.IN_PROGRESS);
+        taskService.checkTaskById(9L);
+        taskService.printTasksSortedByStatus();
+        taskService.printNumberOfTasksWithStatus(Task.Status.IN_PROGRESS);
     }
 }

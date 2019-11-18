@@ -8,4 +8,9 @@ public interface TaskRepository {
     Task updateTask(Task task);
     boolean deleteTaskById(Long id);
     ArrayList<Task> getAll();
+    ArrayList<Task> getTasksByStatus(Task.Status status);
+    void setTaskStatus(Long id, Task.Status status);
+    boolean taskIdExists(Long id);
+    ArrayList<Task> getTasksSortedByStatus();
+    long countTasksByStatus(Task.Status status);
 }
