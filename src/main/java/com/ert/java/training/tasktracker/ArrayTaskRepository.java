@@ -1,7 +1,6 @@
 package com.ert.java.training.tasktracker;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.Iterator;
 import java.util.stream.Collectors;
 
@@ -9,11 +8,7 @@ public class ArrayTaskRepository implements TaskRepository{
     private ArrayList<Task> taskArray;
 
     public ArrayTaskRepository() {
-
-        taskArray = new ArrayList<>();
-        taskArray.add(new Task(1L, "Задание Один", "Белов А.А.", "Голубикин В.В.", "Выполнить задание Один"));
-        taskArray.add(new Task(7L, "Задание Семь", "Рогов П.П.", "Белов А.А.", "Выполнить задание Семь"));
-
+       taskArray = new ArrayList<>();
     }
 
     public boolean idExists(Long newId) {

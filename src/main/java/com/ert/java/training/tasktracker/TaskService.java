@@ -1,10 +1,5 @@
 package com.ert.java.training.tasktracker;
 
-import org.w3c.dom.ls.LSOutput;
-
-import java.sql.SQLOutput;
-import java.util.function.Consumer;
-
 public class TaskService {
     private TaskRepository taskRepository;
 
@@ -61,7 +56,7 @@ public class TaskService {
             System.out.println("Задача с id=" + id + " существует.");
         } else {
             System.out.println("Задачи с id=" + id + " не найдено.");
-        };
+        }
     }
 
     public void printTasksSortedByStatus(){

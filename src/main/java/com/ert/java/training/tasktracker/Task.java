@@ -12,17 +12,15 @@ class Task {
             return rusTitle;
         }
 
+        public int getOrderNum() {
+            return orderNum;
+        }
+
         Status(String rusTitle, int orderNum) {
             this.rusTitle = rusTitle;
             this.orderNum = orderNum;
         }
-
-        public int getOrderNum() {
-            return orderNum;
-        }
     }
-
-
 
     private Long id;
     private String title;
