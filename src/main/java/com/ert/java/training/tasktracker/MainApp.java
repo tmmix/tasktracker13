@@ -1,5 +1,8 @@
 package com.ert.java.training.tasktracker;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainApp {
     public static void main(String[] args) {
         TaskRepository allTasks = new ArrayTaskRepository();
@@ -27,5 +30,15 @@ public class MainApp {
             System.out.println("Поймали ошибку: " + e.getMessage());
         }
         taskService.printTaskList();
+        List<Task> tl = new ArrayList<>();
+        tl.add(taskService.getTask(4L));
+        tl.add(taskService.getTask(5L));
+        tl.add(taskService.getTask(6L));
+        tl.add(taskService.getTask(6L));
+        taskService.saveTasks(tl, "tasks.dat");
+        tl = taskService.loadTasks("tasks.dat");
+        for (int i = 0; i < tl.size(); i++) {
+            System.out.println(tl.get(i).taskInfo());
+        }
     }
 }

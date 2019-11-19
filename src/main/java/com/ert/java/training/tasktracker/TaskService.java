@@ -1,5 +1,9 @@
 package com.ert.java.training.tasktracker;
 
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+
 public class TaskService {
     private TaskRepository taskRepository;
 
@@ -42,6 +46,40 @@ public class TaskService {
             throw new TaskException("Задача " + id + " не найдена");
         }
     }
+
+    public Task getTask(Long id) {
+        return taskRepository.findById(id);
+    }
+
+    public void saveTasks(List<Task> taskList, String filename) {
+        int taskCnt = taskList.size();
+        try(ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(filename))) {
+            out.writeInt(taskCnt);
+            for (int i = 0; i < taskCnt; i++) {
+                out.writeObject(taskList.get(i));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println("В файл " + filename + " записано задач: " + taskCnt);
+    }
+
+    public List<Task> loadTasks(String filename) {
+        List<Task> taskList = new ArrayList<>();
+        int objCnt = 0;
+        try(ObjectInputStream in = new ObjectInputStream(new FileInputStream(filename))) {
+            objCnt = in.readInt();
+            System.out.println(objCnt);
+            for (int i = 0; i < objCnt; i++) {
+                taskList.add((Task) in.readObject());
+            }
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Из файла " + filename + " загружено задач: " + objCnt);
+        return taskList;
+    }
+
 
 
 }
