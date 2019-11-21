@@ -1,5 +1,8 @@
 package com.ert.java.training.tasktracker;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainApp {
     public static void main(String[] args) {
         TaskRepository allTasks = new ArrayTaskRepository();
@@ -33,5 +36,15 @@ public class MainApp {
         taskService.checkTaskById(9L);
         taskService.printTasksSortedByStatus();
         taskService.printNumberOfTasksWithStatus(Task.Status.IN_PROGRESS);
+        List<Task> tl = new ArrayList<>();
+        tl.add(taskService.getTask(4L));
+        tl.add(taskService.getTask(5L));
+        tl.add(taskService.getTask(6L));
+        tl.add(taskService.getTask(6L));
+        taskService.saveTasks(tl, "tasks.dat");
+        tl = taskService.loadTasks("tasks.dat");
+        for (int i = 0; i < tl.size(); i++) {
+            System.out.println(tl.get(i).taskInfo());
+        }
     }
 }

@@ -1,6 +1,8 @@
 package com.ert.java.training.tasktracker;
 
-class Task {
+import java.io.Serializable;
+
+class Task implements Serializable {
 
     public enum Status {
         CREATED("Создана", 1), IN_PROGRESS("В работе", 2), DONE("Выполнена", 3), REJECTED("Отклонена", 4);
