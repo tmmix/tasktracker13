@@ -92,7 +92,7 @@ public class ArrayTaskRepository implements TaskRepository{
 
     @Override
     public boolean taskIdExists(Long id) {
-        return taskArray.stream().filter(task -> task.getId() == id).count() == 1;
+        return taskArray.stream().anyMatch(task -> task.getId() == id);
     }
 
     @Override
