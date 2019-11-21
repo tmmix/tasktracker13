@@ -94,7 +94,6 @@ public class TaskService {
         int objCnt = 0;
         try(ObjectInputStream in = new ObjectInputStream(new FileInputStream(filename))) {
             objCnt = in.readInt();
-            System.out.println(objCnt);
             for (int i = 0; i < objCnt; i++) {
                 taskList.add((Task) in.readObject());
             }

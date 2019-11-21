@@ -2,16 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0c530eb6-b5c4-49e7-ab5f-cd4bc3bcdc40" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ert/java/training/tasktracker/MainApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ert/java/training/tasktracker/MainApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ert/java/training/tasktracker/Task.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ert/java/training/tasktracker/Task.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/ert/java/training/tasktracker/TaskService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ert/java/training/tasktracker/TaskService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/ert/java/training/tasktracker/ArrayTaskRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ert/java/training/tasktracker/ArrayTaskRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/ert/java/training/tasktracker/MainApp.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ert/java/training/tasktracker/MainApp.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/ert/java/training/tasktracker/Task$Status.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ert/java/training/tasktracker/Task$Status.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/ert/java/training/tasktracker/Task.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ert/java/training/tasktracker/Task.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/ert/java/training/tasktracker/TaskRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ert/java/training/tasktracker/TaskRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/ert/java/training/tasktracker/TaskService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ert/java/training/tasktracker/TaskService.class" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
