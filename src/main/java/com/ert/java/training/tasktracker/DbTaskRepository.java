@@ -67,21 +67,10 @@ public class DbTaskRepository implements TaskRepository {
     }
     @Override
     public Task findById(Long id) {
-        try {
-            prst = connection.prepareStatement("select * from tasks where task_id = ?");
-            prst.setObject(1, id);
-            ResultSet rs = prst.executeQuery();
-            rs.next();
-            Task task = new Task(rs.getLong("task_id"),
-                                 rs.getString("title"),
-                                 rs.getString("owner_name"),
-                                 rs.getString("executor_name"),
-                                 rs.getString("description"));
-            task.setStatus(Task.Status.getStatusByName(rs.getString("status")));
-            return task;
-        } catch (SQLException e) {
-            return null;
+        if(selectData(id, null, null).size() != 0) {
+            return selectData(id, null, null).get(0);
         }
+        return null;
     }
 
     @Override
@@ -123,45 +112,93 @@ public class DbTaskRepository implements TaskRepository {
         }
     }
 
+    private ArrayList<Task> selectData(Long id, Task.Status status, String orderBy) {
+        String sql = "select * from tasks where 1=1";
+        if (id != null) {
+            sql += " and task_id = ?";
+        }
+        if (status != null) {
+            sql += " and status = ?";
+        }
+        if(orderBy == "status") {
+            sql += " order by status";
+        } else {
+            sql += " order by 1";
+        }
+        ArrayList<Task> taskList = new ArrayList<>();
+        try {
+            prst = connection.prepareStatement(sql);
+            int paramIdx = 0;
+            if (id != null) {
+                prst.setObject(++paramIdx, id);
+            }
+            if (status != null) {
+                prst.setObject(++paramIdx, status.getRusTitle());
+            }
+            ResultSet rs = prst.executeQuery();
+            while(rs.next()) {
+                Task task = new Task(rs.getLong("task_id"),
+                        rs.getString("title"),
+                        rs.getString("owner_name"),
+                        rs.getString("executor_name"),
+                        rs.getString("description"));
+                task.setStatus(Task.Status.getStatusByName(rs.getString(6)));
+                taskList.add(task);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return taskList;
+    }
+
     @Override
     public boolean deleteTaskById(Long id) {
         try {
             prst = connection.prepareStatement("delete from tasks where task_id = ?");
             prst.setObject(1, id);
-            prst.executeUpdate();
-            return true;
+            return prst.executeUpdate() == 1;
         } catch (SQLException e) {
-            return false;
+            e.printStackTrace();
         }
+        return false;
     }
 
     @Override
     public ArrayList<Task> getAll() {
-        return null;
+            return selectData(null, null, null);
     }
 
     @Override
     public ArrayList<Task> getTasksByStatus(Task.Status status) {
-        return null;
+        return selectData(null, status, null);
     }
 
     @Override
     public void setTaskStatus(Long id, Task.Status status) {
+        try {
+            prst = connection.prepareStatement("update tasks set status = ?" +
+                    "where task_id = ?");
+            prst.setObject(1, status.getRusTitle());
+            prst.setObject(2, id);
+            prst.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
 
     @Override
     public boolean taskIdExists(Long id) {
-        return false;
+        return selectData(id, null, null).size() == 1;
     }
 
     @Override
     public ArrayList<Task> getTasksSortedByStatus() {
-        return null;
+        return selectData(null, null, "status");
     }
 
     @Override
     public long countTasksByStatus(Task.Status status) {
-        return 0;
+        return selectData(null, status, null).size();
     }
 }
