@@ -22,6 +22,19 @@ class Task implements Serializable {
             this.rusTitle = rusTitle;
             this.orderNum = orderNum;
         }
+
+        public static Status getStatusByName(String name) {
+            for (Status st : values()) {
+                // либо equalsIgnoreCase, на ваше усмотрение
+                if (st.getRusTitle().equals(name)) {
+                    return st;
+                }
+            }
+
+            // Либо просто вернуть null
+            throw new IllegalArgumentException("No enum found with url: [" + name + "]");
+        }
+
     }
 
     private Long id;
@@ -48,12 +61,44 @@ class Task implements Serializable {
         return title;
     }
 
+    public String getOwnerName() {
+        return ownerName;
+    }
+
+    public String getExecutorName() {
+        return executorName;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
     public void setStatus(Status status) {
         this.status = status;
     }
 
     public Status getStatus() {
         return status;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setOwnerName(String ownerName) {
+        this.ownerName = ownerName;
+    }
+
+    public void setExecutorName(String executorName) {
+        this.executorName = executorName;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     String taskInfo() {
