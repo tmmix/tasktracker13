@@ -81,26 +81,6 @@ class Task implements Serializable {
         return status;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public void setOwnerName(String ownerName) {
-        this.ownerName = ownerName;
-    }
-
-    public void setExecutorName(String executorName) {
-        this.executorName = executorName;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     String taskInfo() {
         return String.format("Task [id=%d, title='%s', ownerName=%s, executorName=%s, description='%s', status=%s]" ,id, title, ownerName, executorName, description, status.getRusTitle());
     }
