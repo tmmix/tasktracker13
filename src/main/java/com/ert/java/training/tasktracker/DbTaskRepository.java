@@ -44,7 +44,7 @@ public class DbTaskRepository implements TaskRepository {
         }
     }
 
-    public DbTaskRepository() {
+    DbTaskRepository() {
         createTable();
     }
 
@@ -110,22 +110,29 @@ public class DbTaskRepository implements TaskRepository {
                     ", description = ?" +
                     ", status = ?" +
                     "where task_id = ?");
-            prst.setObject(2, task.getTitle());
-            prst.setObject(3, task.getOwnerName());
-            prst.setObject(4, task.getExecutorName());
-            prst.setObject(5, task.getDescription());
-            prst.setObject(6, task.getStatus());
-            prst.setObject(1, task.getId());
+            prst.setObject(1, task.getTitle());
+            prst.setObject(2, task.getOwnerName());
+            prst.setObject(3, task.getExecutorName());
+            prst.setObject(4, task.getDescription());
+            prst.setObject(5, task.getStatus().getRusTitle());
+            prst.setObject(6, task.getId());
             prst.executeUpdate();
+            return task;
         } catch (SQLException e) {
             return null;
         }
-        return null;
     }
 
     @Override
     public boolean deleteTaskById(Long id) {
-        return false;
+        try {
+            prst = connection.prepareStatement("delete from tasks where task_id = ?");
+            prst.setObject(1, id);
+            prst.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            return false;
+        }
     }
 
     @Override
