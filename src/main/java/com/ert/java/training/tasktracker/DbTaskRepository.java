@@ -44,11 +44,7 @@ public class DbTaskRepository implements TaskRepository {
         }
     }
 
-    DbTaskRepository() {
-        createTable();
-    }
-
-    private void createTable() {
+    public void createTable() {
         connect();
 
         try {
@@ -63,7 +59,7 @@ public class DbTaskRepository implements TaskRepository {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
+        //disconnect();
     }
     @Override
     public Task findById(Long id) {
@@ -76,6 +72,7 @@ public class DbTaskRepository implements TaskRepository {
     @Override
     public boolean createTask(Task newTask) {
         try {
+            connect();
             prst = connection.prepareStatement("insert into tasks(task_id, title, owner_name, executor_name, description, status) values(?,?,?,?,?,?)");
             prst.setObject(1, newTask.getId());
             prst.setObject(2, newTask.getTitle());
@@ -86,6 +83,8 @@ public class DbTaskRepository implements TaskRepository {
             prst.executeUpdate();
         } catch (SQLException e) {
             return false;
+        }finally {
+            disconnect();
         }
         return true;
     }
@@ -93,6 +92,7 @@ public class DbTaskRepository implements TaskRepository {
     @Override
     public Task updateTask(Task task) {
         try {
+            connect();
             prst = connection.prepareStatement("update tasks set title = ?" +
                     ", owner_name = ?" +
                     ", executor_name = ?" +
@@ -109,6 +109,8 @@ public class DbTaskRepository implements TaskRepository {
             return task;
         } catch (SQLException e) {
             return null;
+        }finally {
+            disconnect();
         }
     }
 
@@ -127,6 +129,7 @@ public class DbTaskRepository implements TaskRepository {
         }
         ArrayList<Task> taskList = new ArrayList<>();
         try {
+            connect();
             prst = connection.prepareStatement(sql);
             int paramIdx = 0;
             if (id != null) {
@@ -147,6 +150,8 @@ public class DbTaskRepository implements TaskRepository {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            disconnect();
         }
         return taskList;
     }
@@ -154,11 +159,14 @@ public class DbTaskRepository implements TaskRepository {
     @Override
     public boolean deleteTaskById(Long id) {
         try {
+            connect();
             prst = connection.prepareStatement("delete from tasks where task_id = ?");
             prst.setObject(1, id);
             return prst.executeUpdate() == 1;
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            disconnect();
         }
         return false;
     }
@@ -176,6 +184,7 @@ public class DbTaskRepository implements TaskRepository {
     @Override
     public void setTaskStatus(Long id, Task.Status status) {
         try {
+            connect();
             prst = connection.prepareStatement("update tasks set status = ?" +
                     "where task_id = ?");
             prst.setObject(1, status.getRusTitle());
@@ -183,6 +192,8 @@ public class DbTaskRepository implements TaskRepository {
             prst.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            disconnect();
         }
 
     }
