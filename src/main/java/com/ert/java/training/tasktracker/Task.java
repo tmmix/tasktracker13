@@ -25,7 +25,6 @@ class Task implements Serializable {
 
         public static Status getStatusByName(String name) {
             for (Status st : values()) {
-                // либо equalsIgnoreCase, на ваше усмотрение
                 if (st.getRusTitle().equals(name)) {
                     return st;
                 }
