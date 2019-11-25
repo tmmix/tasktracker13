@@ -15,7 +15,7 @@
 
         <property name="hibernate.hbm2ddl.auto">create</property>
 
-        <mapping class="com.flamexander.hibernate.h2.User"/>
-        <mapping class="com.flamexander.hibernate.h2.Item"/>
+        <mapping class="com.ert.java.training.tasktracker.Task"/>
+<!--        <mapping class="com.flamexander.hibernate.h2.Item"/>-->
     </session-factory>
 </hibernate-configuration>
