@@ -15,17 +15,6 @@ public class HibernateTaskRepository implements TaskRepository{
             .buildSessionFactory();
 
     private static Session session = null;
-//        try {
-//            session = factory.getCurrentSession();
-//            session.beginTransaction();
-//            Task task = session.get(Task.class, 1L);
-//            System.out.println(task.taskInfo());
-//        } catch (
-//            HibernateException e) {
-//            e.printStackTrace();
-//        } finally {
-//            factory.close();
-//        }
 
     @Override
     public Task findById(Long id) {
@@ -34,9 +23,11 @@ public class HibernateTaskRepository implements TaskRepository{
             session = factory.getCurrentSession();
             session.beginTransaction();
             task = session.get(Task.class, id);
-            session.getTransaction().commit();
         } catch (HibernateException e) {
             e.printStackTrace();
+        } finally {
+            session.getTransaction().commit();
+
         }
         return task;
     }
@@ -47,9 +38,11 @@ public class HibernateTaskRepository implements TaskRepository{
             session = factory.getCurrentSession();
             session.beginTransaction();
             session.save(newTask);
-            session.getTransaction().commit();
         } catch (HibernateException e) {
             e.printStackTrace();
+        } finally {
+            session.getTransaction().commit();
+
         }
         return true;
     }
@@ -60,9 +53,11 @@ public class HibernateTaskRepository implements TaskRepository{
             session = factory.getCurrentSession();
             session.beginTransaction();
             session.update(task);
-            session.getTransaction().commit();
+
         } catch (HibernateException e) {
             e.printStackTrace();
+        } finally {
+            session.getTransaction().commit();
         }
         return task;
     }
@@ -79,9 +74,11 @@ public class HibernateTaskRepository implements TaskRepository{
             } else {
                 return false;
             }
-            session.getTransaction().commit();
+
         } catch (HibernateException e) {
             e.printStackTrace();
+        } finally {
+            session.getTransaction().commit();
         }
         return true;
     }
@@ -92,10 +89,11 @@ public class HibernateTaskRepository implements TaskRepository{
         try {
             session = factory.getCurrentSession();
             session.beginTransaction();
-            taskList = session.createQuery("select s from Task s order by s.statusName", Task.class).getResultList();
-            session.getTransaction().commit();
+            taskList = session.createQuery("select s from Task s", Task.class).getResultList();
         } catch (HibernateException e) {
             e.printStackTrace();
+        } finally {
+            session.getTransaction().commit();
         }
         return (ArrayList<Task>) taskList;
     }
@@ -109,9 +107,10 @@ public class HibernateTaskRepository implements TaskRepository{
             taskList = session.createQuery("select s from Task s where s.statusName = :statusName", Task.class)
                     .setParameter("statusName", status.getRusTitle())
                     .getResultList();
-            session.getTransaction().commit();
         } catch (HibernateException e) {
             e.printStackTrace();
+        } finally {
+            session.getTransaction().commit();
         }
         return (ArrayList<Task>) taskList;
     }
@@ -125,9 +124,10 @@ public class HibernateTaskRepository implements TaskRepository{
             task = session.get(Task.class, id);
             task.setStatus(status);
             session.update(task);
-            session.getTransaction().commit();
         } catch (HibernateException e) {
             e.printStackTrace();
+        } finally {
+            session.getTransaction().commit();
         }
     }
 
