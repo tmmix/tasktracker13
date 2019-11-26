@@ -13,6 +13,15 @@ class Task implements Serializable {
         private String rusTitle;
         private int orderNum;
 
+        public static Status getStatusByName(String string) {
+            for (Status s: values()) {
+                if(s.getRusTitle().equals(string)){
+                    return s;
+                }
+            }
+            throw new IllegalArgumentException("Не найден enum статуса с именем: [" + string + "]");
+        }
+
         public String getRusTitle() {
             return rusTitle;
         }
@@ -73,6 +82,18 @@ class Task implements Serializable {
     public void setStatus(String statusName) {
         this.statusName = statusName;
 //        this.status = Task.Status.valueOf(statusName);
+    }
+
+    public String getOwnerName() {
+        return ownerName;
+    }
+
+    public String getExecutorName() {
+        return executorName;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
 
