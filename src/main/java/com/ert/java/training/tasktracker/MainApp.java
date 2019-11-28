@@ -18,8 +18,10 @@ public class MainApp {
         } catch (TaskException e){
             System.out.println("Поймали ошибку: " + e.getMessage());
         }
-//        taskService.printTaskList();
-        try {
+        taskService.printTaskList();
+        taskService.editTask(new Task(4L, "Еще одно задание исправлено", "Камский Е.К. (зам)", "Журов К.В. (ИО Журова)", "Организовать поставку срочно"));
+        taskService.printTaskList();
+/*        try {
             taskService.deleteTask(4L);
             taskService.deleteTask(20L);
         } catch (TaskException e) {
@@ -33,7 +35,7 @@ public class MainApp {
         taskService.printTaskList();
 //        taskService.printTasksByStatus(Task.Status.DONE);
         taskService.checkTaskById(7L);
-        taskService.printTasksSortedByStatus();
+        taskService.printTasksSortedByStatus();*/
 //        taskService.printNumberOfTasksWithStatus(Task.Status.IN_PROGRESS);
 //        List<Task> tl = new ArrayList<>();
 //        tl.add(taskService.getTask(4L));
