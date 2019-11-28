@@ -2,6 +2,8 @@ package com.ert.java.training.tasktracker;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class DbTaskRepository implements TaskRepository {
     private static Connection connection;
@@ -79,7 +81,7 @@ public class DbTaskRepository implements TaskRepository {
             prst.setObject(3, newTask.getOwnerName());
             prst.setObject(4, newTask.getExecutorName());
             prst.setObject(5, newTask.getDescription());
-            prst.setObject(6, newTask.getStatus().getRusTitle());
+            prst.setObject(6, Task.Status.CREATED.getRusTitle());
             prst.executeUpdate();
         } catch (SQLException e) {
             return false;
@@ -114,7 +116,7 @@ public class DbTaskRepository implements TaskRepository {
         }
     }
 
-    private ArrayList<Task> selectData(Long id, Task.Status status, String orderBy) {
+    private List<Task> selectData(Long id, Task.Status status, String orderBy) {
         String sql = "select * from tasks where 1=1";
         if (id != null) {
             sql += " and task_id = ?";
@@ -127,7 +129,7 @@ public class DbTaskRepository implements TaskRepository {
         } else {
             sql += " order by 1";
         }
-        ArrayList<Task> taskList = new ArrayList<>();
+        List<Task> taskList = new ArrayList<>();
         try {
             connect();
             prst = connection.prepareStatement(sql);
@@ -172,12 +174,12 @@ public class DbTaskRepository implements TaskRepository {
     }
 
     @Override
-    public ArrayList<Task> getAll() {
+    public List<Task> getAll() {
             return selectData(null, null, null);
     }
 
     @Override
-    public ArrayList<Task> getTasksByStatus(Task.Status status) {
+    public List<Task> getTasksByStatus(Task.Status status) {
         return selectData(null, status, null);
     }
 
@@ -204,7 +206,7 @@ public class DbTaskRepository implements TaskRepository {
     }
 
     @Override
-    public ArrayList<Task> getTasksSortedByStatus() {
+    public List<Task> getTasksSortedByStatus() {
         return selectData(null, null, "status");
     }
 
