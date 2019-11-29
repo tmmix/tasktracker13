@@ -17,7 +17,7 @@ public class HibernateTaskRepository implements TaskRepository{
     private static Session session = null;
 
     @Override
-    public Task findById(Long id) {
+    public Task getTaskById(Long id) {
         Task task = new Task();
         try {
             session = factory.getCurrentSession();
@@ -133,7 +133,7 @@ public class HibernateTaskRepository implements TaskRepository{
 
     @Override
     public boolean taskIdExists(Long id) {
-        return findById(id) != null;
+        return getTaskById(id) != null;
     }
 
     @Override

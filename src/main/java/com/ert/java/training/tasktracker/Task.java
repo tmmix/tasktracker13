@@ -51,7 +51,8 @@ class Task implements Serializable {
     private String description;
     @Column(name = "status_name")
     private String statusName;
-    //private Status status;
+    @Column(name = "status")
+    private Status status;
 
     public Task() {
     }
@@ -62,7 +63,7 @@ class Task implements Serializable {
         this.ownerName = ownerName;
         this.executorName = executorName;
         this.description = description;
-        //this.status = Status.CREATED;
+        this.status = Status.CREATED;
         this.statusName = status.getRusTitle();
     }
 
@@ -79,12 +80,13 @@ class Task implements Serializable {
     }
 
     public void setStatus(Status status) {
-//        this.status = status;
+        this.status = status;
         this.statusName = status.getRusTitle();
     }
 
     public void setStatus(String statusName) {
-        this.statusName = statusName;
+        this.status = Status.getStatusByName(statusName);
+        this.statusName = status.getRusTitle();
     }
 
     public String getOwnerName() {
@@ -101,7 +103,7 @@ class Task implements Serializable {
 
 
     public Status getStatus() {
-        return Status.getStatusByName(statusName);
+        return status;
     }
 
     public String getStatusName() {
@@ -109,6 +111,6 @@ class Task implements Serializable {
     }
 
     String taskInfo() {
-        return String.format("Task [id=%d, title='%s', ownerName=%s, executorName=%s, description='%s', status=%s]" ,id, title, ownerName, executorName, description, statusName);
+        return String.format("Task [id=%d, title='%s', ownerName=%s, executorName=%s, description='%s', status_name=%s]" ,id, title, ownerName, executorName, description, statusName);
     }
 }

@@ -2,6 +2,7 @@ package com.ert.java.training.tasktracker;
 
 import org.hibernate.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,18 +12,22 @@ public class MainApp {
         TaskService taskService = new TaskService(allTasks);
 //        System.out.println(taskService.getTask(1L).taskInfo());
         try {
+            taskService.addTask(new Task(4L, "Еще одно задание", "Камский Е.К.", "Журов К.В.", "Организовать поставку"));
             taskService.addTask(new Task(11L, "Одиннадцатое задание", "Камский Е.К.", "Журов К.В.", "Организовать поставку", Task.Status.CREATED));
             taskService.addTask(new Task(10L, "Задание Десять", "Перкинс А.А.", "Деловой В.В.", "Выполнить задание Десять"));
             taskService.addTask(new Task(7L, "Задание Семь", "Рогов П.П.", "Белов А.А.", "Выполнить задание Семь"));
-            taskService.addTask(new Task(4L, "Еще одно задание", "Камский Е.К.", "Журов К.В.", "Организовать поставку"));
         } catch (TaskException e){
             System.out.println("Поймали ошибку: " + e.getMessage());
         }
         taskService.printTaskList();
-        taskService.editTask(new Task(4L, "Еще одно задание исправлено", "Камский Е.К. (зам)", "Журов К.В. (ИО Журова)", "Организовать поставку срочно", Task.Status.IN_PROGRESS));
+        taskService.editTask(new Task(4L,
+                                      "Еще одно задание исправлено",
+                                      "Камский Е.К. (зам)",
+                                      "Журов К.В. (ИО Журова)",
+                                      "Описание обновлено " + LocalDateTime.now(),
+                                      Task.Status.IN_PROGRESS));
         taskService.printTaskList();
         try {
-            taskService.deleteTask(4L);
             taskService.deleteTask(20L);
         } catch (TaskException e) {
             System.out.println("Поймали ошибку: " + e.getMessage());

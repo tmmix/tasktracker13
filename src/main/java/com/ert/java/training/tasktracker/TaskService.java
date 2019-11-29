@@ -12,7 +12,7 @@ public class TaskService {
     }
 
     public void addTask(Task newTask) {
-        if (taskRepository.findById(newTask.getId()) != null) {
+        if (taskRepository.getTaskById(newTask.getId()) != null) {
             throw new TaskException("Задача " + newTask.getId() + ": " + newTask.getTitle() + " уже существует");
         }
         if(taskRepository.createTask(newTask)) {
@@ -73,7 +73,7 @@ public class TaskService {
     }
 
     public Task getTask(Long id) {
-        return taskRepository.findById(id);
+        return taskRepository.getTaskById(id);
     }
 
     public void saveTasks(List<Task> taskList, String filename) {

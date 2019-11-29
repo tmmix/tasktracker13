@@ -56,7 +56,7 @@ public class DbTaskRepository implements TaskRepository {
                             "    owner_name,\n" +
                             "    executor_name,\n" +
                             "    description,\n" +
-                            "    status\n" +
+                            "    status_name\n" +
                               ")");
         } catch (SQLException e) {
             e.printStackTrace();
@@ -64,7 +64,7 @@ public class DbTaskRepository implements TaskRepository {
         //disconnect();
     }
     @Override
-    public Task findById(Long id) {
+    public Task getTaskById(Long id) {
         if(selectData(id, null, null).size() != 0) {
             return selectData(id, null, null).get(0);
         }
@@ -75,7 +75,7 @@ public class DbTaskRepository implements TaskRepository {
     public boolean createTask(Task newTask) {
         try {
             connect();
-            prst = connection.prepareStatement("insert into tasks(task_id, title, owner_name, executor_name, description, status) values(?,?,?,?,?,?)");
+            prst = connection.prepareStatement("insert into tasks(task_id, title, owner_name, executor_name, description, status_name) values(?,?,?,?,?,?)");
             prst.setObject(1, newTask.getId());
             prst.setObject(2, newTask.getTitle());
             prst.setObject(3, newTask.getOwnerName());
@@ -99,7 +99,7 @@ public class DbTaskRepository implements TaskRepository {
                     ", owner_name = ?" +
                     ", executor_name = ?" +
                     ", description = ?" +
-                    ", status = ?" +
+                    ", status_name = ?" +
                     "where task_id = ?");
             prst.setObject(1, task.getTitle());
             prst.setObject(2, task.getOwnerName());
@@ -108,7 +108,7 @@ public class DbTaskRepository implements TaskRepository {
             prst.setObject(5, task.getStatus().getRusTitle());
             prst.setObject(6, task.getId());
             prst.executeUpdate();
-            return task;
+            return getTaskById(task.getId());
         } catch (SQLException e) {
             return null;
         }finally {
@@ -122,10 +122,10 @@ public class DbTaskRepository implements TaskRepository {
             sql += " and task_id = ?";
         }
         if (status != null) {
-            sql += " and status = ?";
+            sql += " and status_name = ?";
         }
-        if(orderBy == "status") {
-            sql += " order by status";
+        if(orderBy == "status_name") {
+            sql += " order by status_name";
         } else {
             sql += " order by 1";
         }
@@ -187,7 +187,7 @@ public class DbTaskRepository implements TaskRepository {
     public void setTaskStatus(Long id, Task.Status status) {
         try {
             connect();
-            prst = connection.prepareStatement("update tasks set status = ?" +
+            prst = connection.prepareStatement("update tasks set status_name = ?" +
                     "where task_id = ?");
             prst.setObject(1, status.getRusTitle());
             prst.setObject(2, id);
@@ -207,7 +207,7 @@ public class DbTaskRepository implements TaskRepository {
 
     @Override
     public List<Task> getTasksSortedByStatus() {
-        return selectData(null, null, "status");
+        return selectData(null, null, "status_name");
     }
 
     @Override
