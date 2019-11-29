@@ -56,14 +56,18 @@ class Task implements Serializable {
     public Task() {
     }
 
-    public Task(Long id, String title, String ownerName, String executorName, String description) {
+    public Task(Long id, String title, String ownerName, String executorName, String description, Task.Status status) {
         this.id = id;
         this.title = title;
         this.ownerName = ownerName;
         this.executorName = executorName;
         this.description = description;
         //this.status = Status.CREATED;
-        this.statusName = Status.CREATED.getRusTitle();
+        this.statusName = status.getRusTitle();
+    }
+
+    public Task(Long id, String title, String ownerName, String executorName, String description) {
+        this(id, title, ownerName, executorName, description, Status.CREATED);
     }
 
     Long getId() {
@@ -81,7 +85,6 @@ class Task implements Serializable {
 
     public void setStatus(String statusName) {
         this.statusName = statusName;
-//        this.status = Task.Status.valueOf(statusName);
     }
 
     public String getOwnerName() {
@@ -98,7 +101,7 @@ class Task implements Serializable {
 
 
     public Status getStatus() {
-        return Status.valueOf(statusName);
+        return Status.getStatusByName(statusName);
     }
 
     public String getStatusName() {

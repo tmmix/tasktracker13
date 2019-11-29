@@ -7,21 +7,21 @@ import java.util.List;
 
 public class MainApp {
     public static void main(String[] args) {
-        TaskRepository allTasks = new DbTaskRepository();
+        TaskRepository allTasks = new HibernateTaskRepository();
         TaskService taskService = new TaskService(allTasks);
 //        System.out.println(taskService.getTask(1L).taskInfo());
         try {
+            taskService.addTask(new Task(11L, "Одиннадцатое задание", "Камский Е.К.", "Журов К.В.", "Организовать поставку", Task.Status.CREATED));
             taskService.addTask(new Task(10L, "Задание Десять", "Перкинс А.А.", "Деловой В.В.", "Выполнить задание Десять"));
             taskService.addTask(new Task(7L, "Задание Семь", "Рогов П.П.", "Белов А.А.", "Выполнить задание Семь"));
-            taskService.addTask(new Task(4L, "Еще одно задание", "Камский Е.К.", "Журов К.В.", "Организовать поставку"));
             taskService.addTask(new Task(4L, "Еще одно задание", "Камский Е.К.", "Журов К.В.", "Организовать поставку"));
         } catch (TaskException e){
             System.out.println("Поймали ошибку: " + e.getMessage());
         }
         taskService.printTaskList();
-        taskService.editTask(new Task(4L, "Еще одно задание исправлено", "Камский Е.К. (зам)", "Журов К.В. (ИО Журова)", "Организовать поставку срочно"));
+        taskService.editTask(new Task(4L, "Еще одно задание исправлено", "Камский Е.К. (зам)", "Журов К.В. (ИО Журова)", "Организовать поставку срочно", Task.Status.IN_PROGRESS));
         taskService.printTaskList();
-/*        try {
+        try {
             taskService.deleteTask(4L);
             taskService.deleteTask(20L);
         } catch (TaskException e) {
@@ -35,7 +35,7 @@ public class MainApp {
         taskService.printTaskList();
 //        taskService.printTasksByStatus(Task.Status.DONE);
         taskService.checkTaskById(7L);
-        taskService.printTasksSortedByStatus();*/
+        taskService.printTasksSortedByStatus();
 //        taskService.printNumberOfTasksWithStatus(Task.Status.IN_PROGRESS);
 //        List<Task> tl = new ArrayList<>();
 //        tl.add(taskService.getTask(4L));
