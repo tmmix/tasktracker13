@@ -8,7 +8,7 @@ import java.util.List;
 
 public class MainApp {
     public static void main(String[] args) {
-        TaskRepository allTasks = new HibernateTaskRepository();
+        TaskRepository allTasks = new DbTaskRepository();
         TaskService taskService = new TaskService(allTasks);
 //        System.out.println(taskService.getTask(1L).taskInfo());
         try {
