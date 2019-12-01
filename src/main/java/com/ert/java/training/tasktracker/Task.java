@@ -1,5 +1,7 @@
 package com.ert.java.training.tasktracker;
 
+import org.springframework.stereotype.Component;
+
 import javax.persistence.*;
 import java.io.Serializable;
 

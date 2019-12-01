@@ -1,10 +1,12 @@
 package com.ert.java.training.tasktracker;
 
+import org.springframework.stereotype.Repository;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
+@Repository
 public class DbTaskRepository implements TaskRepository {
     private static Connection connection;
     private static Statement stmt;

@@ -1,6 +1,7 @@
 package com.ert.java.training.tasktracker;
 
 import org.hibernate.*;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -8,7 +9,11 @@ import java.util.List;
 
 public class MainApp {
     public static void main(String[] args) {
-        TaskRepository allTasks = new DbTaskRepository();
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(TrackerConfig.class);
+        TaskService ts = context.getBean("taskService", TaskService.class);
+        ts.printTaskList();
+        context.close();
+        /*TaskRepository allTasks = new DbTaskRepository();
         TaskService taskService = new TaskService(allTasks);
 //        System.out.println(taskService.getTask(1L).taskInfo());
         try {
@@ -52,5 +57,6 @@ public class MainApp {
 //        for (int i = 0; i < tl.size(); i++) {
 //            System.out.println(tl.get(i).taskInfo());
 //        }
+         */
     }
 }

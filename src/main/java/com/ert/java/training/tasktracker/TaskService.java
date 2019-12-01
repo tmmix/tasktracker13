@@ -1,13 +1,26 @@
 package com.ert.java.training.tasktracker;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-
+@Service
 public class TaskService {
     private TaskRepository taskRepository;
 
+    public TaskService() {
+    }
+
     public TaskService(TaskRepository taskRepository) {
+        this.taskRepository = taskRepository;
+    }
+
+    @Autowired
+    @Qualifier(value = "dbTaskRepository")
+    public void setTaskRepository(TaskRepository taskRepository) {
         this.taskRepository = taskRepository;
     }
 

@@ -4,11 +4,12 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-
+@Repository
 public class HibernateTaskRepository implements TaskRepository{
     private static SessionFactory factory = new Configuration()
             .configure("hibernate.cfg.xml")
