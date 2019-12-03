@@ -1,16 +1,16 @@
 package com.ert.java.training.tasktracker;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public interface TaskRepository {
-    Task findById(Long id);
     boolean createTask(Task newTask);
+    Task getTaskById(Long id);
     Task updateTask(Task task);
     boolean deleteTaskById(Long id);
-    ArrayList<Task> getAll();
-    ArrayList<Task> getTasksByStatus(Task.Status status);
-    void setTaskStatus(Long id, Task.Status status);
     boolean taskIdExists(Long id);
-    ArrayList<Task> getTasksSortedByStatus();
+    void setTaskStatus(Long id, Task.Status status);
+    List<Task> getAll();
+    List<Task> getTasksByStatus(Task.Status status);
+    List<Task> getTasksSortedByStatus();
     long countTasksByStatus(Task.Status status);
 }

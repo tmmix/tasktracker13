@@ -4,11 +4,12 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-
+@Repository
 public class HibernateTaskRepository implements TaskRepository{
     private static SessionFactory factory = new Configuration()
             .configure("hibernate.cfg.xml")
@@ -17,7 +18,7 @@ public class HibernateTaskRepository implements TaskRepository{
     private static Session session = null;
 
     @Override
-    public Task findById(Long id) {
+    public Task getTaskById(Long id) {
         Task task = new Task();
         try {
             session = factory.getCurrentSession();
@@ -133,7 +134,7 @@ public class HibernateTaskRepository implements TaskRepository{
 
     @Override
     public boolean taskIdExists(Long id) {
-        return findById(id) != null;
+        return getTaskById(id) != null;
     }
 
     @Override

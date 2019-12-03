@@ -1,18 +1,31 @@
 package com.ert.java.training.tasktracker;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-
+@Service
 public class TaskService {
     private TaskRepository taskRepository;
+
+    public TaskService() {
+    }
 
     public TaskService(TaskRepository taskRepository) {
         this.taskRepository = taskRepository;
     }
 
+    @Autowired
+    @Qualifier(value = "dbTaskRepository")
+    public void setTaskRepository(TaskRepository taskRepository) {
+        this.taskRepository = taskRepository;
+    }
+
     public void addTask(Task newTask) {
-        if (taskRepository.findById(newTask.getId()) != null) {
+        if (taskRepository.getTaskById(newTask.getId()) != null) {
             throw new TaskException("Задача " + newTask.getId() + ": " + newTask.getTitle() + " уже существует");
         }
         if(taskRepository.createTask(newTask)) {
@@ -73,7 +86,7 @@ public class TaskService {
     }
 
     public Task getTask(Long id) {
-        return taskRepository.findById(id);
+        return taskRepository.getTaskById(id);
     }
 
     public void saveTasks(List<Task> taskList, String filename) {

@@ -1,5 +1,7 @@
 package com.ert.java.training.tasktracker;
 
+import org.springframework.stereotype.Component;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -51,19 +53,24 @@ class Task implements Serializable {
     private String description;
     @Column(name = "status_name")
     private String statusName;
-    //private Status status;
+    @Column(name = "status")
+    private Status status;
 
     public Task() {
     }
 
-    public Task(Long id, String title, String ownerName, String executorName, String description) {
+    public Task(Long id, String title, String ownerName, String executorName, String description, Task.Status status) {
         this.id = id;
         this.title = title;
         this.ownerName = ownerName;
         this.executorName = executorName;
         this.description = description;
-        //this.status = Status.CREATED;
-        this.statusName = Status.CREATED.getRusTitle();
+        this.status = Status.CREATED;
+        this.statusName = status.getRusTitle();
+    }
+
+    public Task(Long id, String title, String ownerName, String executorName, String description) {
+        this(id, title, ownerName, executorName, description, Status.CREATED);
     }
 
     Long getId() {
@@ -75,13 +82,13 @@ class Task implements Serializable {
     }
 
     public void setStatus(Status status) {
-//        this.status = status;
+        this.status = status;
         this.statusName = status.getRusTitle();
     }
 
     public void setStatus(String statusName) {
-        this.statusName = statusName;
-//        this.status = Task.Status.valueOf(statusName);
+        this.status = Status.getStatusByName(statusName);
+        this.statusName = status.getRusTitle();
     }
 
     public String getOwnerName() {
@@ -98,7 +105,7 @@ class Task implements Serializable {
 
 
     public Status getStatus() {
-        return Status.valueOf(statusName);
+        return status;
     }
 
     public String getStatusName() {
@@ -106,6 +113,6 @@ class Task implements Serializable {
     }
 
     String taskInfo() {
-        return String.format("Task [id=%d, title='%s', ownerName=%s, executorName=%s, description='%s', status=%s]" ,id, title, ownerName, executorName, description, statusName);
+        return String.format("Task [id=%d, title='%s', ownerName=%s, executorName=%s, description='%s', status_name=%s]" ,id, title, ownerName, executorName, description, statusName);
     }
 }
