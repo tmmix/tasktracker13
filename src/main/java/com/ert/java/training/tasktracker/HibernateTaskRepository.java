@@ -4,6 +4,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -11,11 +12,10 @@ import java.util.Comparator;
 import java.util.List;
 @Repository
 public class HibernateTaskRepository implements TaskRepository{
-    private static SessionFactory factory = new Configuration()
-            .configure("hibernate.cfg.xml")
-            .buildSessionFactory();
 
-    private static Session session = null;
+    @Autowired
+    private SessionFactory factory;
+    private Session session;
 
     @Override
     public Task getTaskById(Long id) {

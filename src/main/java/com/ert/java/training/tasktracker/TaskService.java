@@ -19,7 +19,7 @@ public class TaskService {
     }
 
     @Autowired
-    @Qualifier(value = "dbTaskRepository")
+    @Qualifier(value = "hibernateTaskRepository")
     public void setTaskRepository(TaskRepository taskRepository) {
         this.taskRepository = taskRepository;
     }
