@@ -10,12 +10,11 @@ import org.springframework.context.annotation.Configuration;
 @ComponentScan(basePackages = "com.ert.java.training.tasktracker")
 public class TrackerConfig {
 
-    @Bean(name = "sessionFactory")
+    @Bean
     public SessionFactory SessionFactory() {
-        SessionFactory factory = new org.hibernate.cfg.Configuration()
+        return new org.hibernate.cfg.Configuration()
                 .configure("hibernate.cfg.xml")
                 .buildSessionFactory();
-        return factory;
     }
 
 }

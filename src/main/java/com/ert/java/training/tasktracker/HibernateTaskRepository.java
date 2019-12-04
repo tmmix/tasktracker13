@@ -15,7 +15,7 @@ public class HibernateTaskRepository implements TaskRepository{
 
     @Autowired
     private SessionFactory factory;
-    private Session session = null;
+    private Session session;
 
     @Override
     public Task getTaskById(Long id) {

@@ -53,10 +53,9 @@ public class MainApp {
         tl.add(taskService.getTask(6L));
         taskService.saveTasks(tl, "tasks.dat");
         tl = taskService.loadTasks("tasks.dat");
-        for (int i = 0; i < tl.size(); i++) {
-            System.out.println(tl.get(i).taskInfo());
+        for (Task task : tl) {
+            System.out.println(task.taskInfo());
         }
-
         context.close();
     }
 }
