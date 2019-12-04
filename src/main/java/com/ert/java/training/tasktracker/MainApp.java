@@ -10,12 +10,11 @@ import java.util.List;
 public class MainApp {
     public static void main(String[] args) {
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(TrackerConfig.class);
-        TaskService ts = context.getBean("taskService", TaskService.class);
-        ts.printTaskList();
-        context.close();
+        TaskService taskService = context.getBean("taskService", TaskService.class);
+        taskService.printTaskList();
         /*TaskRepository allTasks = new DbTaskRepository();
-        TaskService taskService = new TaskService(allTasks);
-//        System.out.println(taskService.getTask(1L).taskInfo());
+        TaskService taskService = new TaskService(allTasks);*/
+        System.out.println(taskService.getTask(1L).taskInfo());
         try {
             taskService.addTask(new Task(4L, "Еще одно задание", "Камский Е.К.", "Журов К.В.", "Организовать поставку"));
             taskService.addTask(new Task(11L, "Одиннадцатое задание", "Камский Е.К.", "Журов К.В.", "Организовать поставку", Task.Status.CREATED));
@@ -43,20 +42,21 @@ public class MainApp {
         taskService.setTaskStatus(5L, Task.Status.DONE);
         taskService.setTaskStatus(7L, Task.Status.DONE);
         taskService.printTaskList();
-//        taskService.printTasksByStatus(Task.Status.DONE);
+        taskService.printTasksByStatus(Task.Status.DONE);
         taskService.checkTaskById(7L);
         taskService.printTasksSortedByStatus();
-//        taskService.printNumberOfTasksWithStatus(Task.Status.IN_PROGRESS);
-//        List<Task> tl = new ArrayList<>();
-//        tl.add(taskService.getTask(4L));
-//        tl.add(taskService.getTask(5L));
-//        tl.add(taskService.getTask(6L));
-//        tl.add(taskService.getTask(6L));
-//        taskService.saveTasks(tl, "tasks.dat");
-//        tl = taskService.loadTasks("tasks.dat");
-//        for (int i = 0; i < tl.size(); i++) {
-//            System.out.println(tl.get(i).taskInfo());
-//        }
-         */
+        taskService.printNumberOfTasksWithStatus(Task.Status.IN_PROGRESS);
+        List<Task> tl = new ArrayList<>();
+        tl.add(taskService.getTask(4L));
+        tl.add(taskService.getTask(5L));
+        tl.add(taskService.getTask(6L));
+        tl.add(taskService.getTask(6L));
+        taskService.saveTasks(tl, "tasks.dat");
+        tl = taskService.loadTasks("tasks.dat");
+        for (int i = 0; i < tl.size(); i++) {
+            System.out.println(tl.get(i).taskInfo());
+        }
+
+        context.close();
     }
 }
