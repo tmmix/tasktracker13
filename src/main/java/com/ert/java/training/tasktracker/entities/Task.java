@@ -1,13 +1,11 @@
-package com.ert.java.training.tasktracker;
-
-import org.springframework.stereotype.Component;
+package com.ert.java.training.tasktracker.entities;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
 @Table(name = "tasks")
-class Task implements Serializable {
+public class Task implements Serializable {
 
     public enum Status {
         CREATED("Создана", 1), IN_PROGRESS("В работе", 2), DONE("Выполнена", 3), REJECTED("Отклонена", 4);
@@ -73,11 +71,11 @@ class Task implements Serializable {
         this(id, title, ownerName, executorName, description, Status.CREATED);
     }
 
-    Long getId() {
+    public Long getId() {
         return id;
     }
 
-    String getTitle() {
+    public String getTitle() {
         return title;
     }
 
@@ -112,7 +110,7 @@ class Task implements Serializable {
         return statusName;
     }
 
-    String taskInfo() {
+    public String taskInfo() {
         return String.format("Task [id=%d, title='%s', ownerName=%s, executorName=%s, description='%s', status_name=%s]" ,id, title, ownerName, executorName, description, statusName);
     }
 }

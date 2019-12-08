@@ -1,4 +1,6 @@
-package com.ert.java.training.tasktracker;
+package com.ert.java.training.tasktracker.repositories;
+
+import com.ert.java.training.tasktracker.entities.Task;
 
 import java.util.List;
 

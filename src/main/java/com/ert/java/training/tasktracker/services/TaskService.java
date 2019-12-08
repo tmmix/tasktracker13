@@ -1,5 +1,8 @@
-package com.ert.java.training.tasktracker;
+package com.ert.java.training.tasktracker.services;
 
+import com.ert.java.training.tasktracker.entities.Task;
+import com.ert.java.training.tasktracker.TaskException;
+import com.ert.java.training.tasktracker.repositories.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;

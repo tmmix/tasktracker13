@@ -1,6 +1,7 @@
 package com.ert.java.training.tasktracker;
 
-import org.hibernate.*;
+import com.ert.java.training.tasktracker.entities.Task;
+import com.ert.java.training.tasktracker.services.TaskService;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.time.LocalDateTime;

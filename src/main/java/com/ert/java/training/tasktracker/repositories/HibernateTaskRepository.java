@@ -1,9 +1,9 @@
-package com.ert.java.training.tasktracker;
+package com.ert.java.training.tasktracker.repositories;
 
+import com.ert.java.training.tasktracker.entities.Task;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 @Repository
-public class HibernateTaskRepository implements TaskRepository{
+public class HibernateTaskRepository implements TaskRepository {
 
     @Autowired
     private SessionFactory factory;

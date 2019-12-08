@@ -1,10 +1,10 @@
-package com.ert.java.training.tasktracker;
+package com.ert.java.training.tasktracker.repositories;
 
+import com.ert.java.training.tasktracker.entities.Task;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 @Repository
 public class DbTaskRepository implements TaskRepository {
