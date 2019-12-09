@@ -38,8 +38,12 @@ public class TaskService {
         }
     }
 
+    public List<Task> getTaskList() {
+        return taskRepository.getAll();
+    }
+
     public void printTaskList() {
-        for (Task task: taskRepository.getAll()) {
+        for (Task task: getTaskList()) {
             if (task != null) {
                 System.out.println(task.taskInfo());
             }

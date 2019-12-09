@@ -7,129 +7,81 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 @Repository
+@Transactional
 public class HibernateTaskRepository implements TaskRepository {
+    private SessionFactory factory;
 
     @Autowired
-    private SessionFactory factory;
-    private Session session;
+    public void setFactory(SessionFactory factory) {
+        this.factory = factory;
+    }
+
 
     @Override
     public Task getTaskById(Long id) {
-        Task task = new Task();
-        try {
-            session = factory.getCurrentSession();
-            session.beginTransaction();
-            task = session.get(Task.class, id);
-        } catch (HibernateException e) {
-            e.printStackTrace();
-        } finally {
-            session.getTransaction().commit();
-
-        }
+        Session session = factory.getCurrentSession();
+        Task task = session.get(Task.class, id);
         return task;
     }
 
     @Override
     public boolean createTask(Task newTask) {
-        try {
-            session = factory.getCurrentSession();
-            session.beginTransaction();
-            session.save(newTask);
-        } catch (HibernateException e) {
-            e.printStackTrace();
-        } finally {
-            session.getTransaction().commit();
-
-        }
+        Session session = factory.getCurrentSession();
+        session.save(newTask);
         return true;
     }
 
     @Override
     public Task updateTask(Task task) {
-        try {
-            session = factory.getCurrentSession();
-            session.beginTransaction();
-            session.update(task);
-
-        } catch (HibernateException e) {
-            e.printStackTrace();
-        } finally {
-            session.getTransaction().commit();
-        }
+        Session session = factory.getCurrentSession();
+        session.update(task);
         return task;
     }
 
     @Override
     public boolean deleteTaskById(Long id) {
+        Session session = factory.getCurrentSession();
         Task task;
-        try {
-            session = factory.getCurrentSession();
-            session.beginTransaction();
-            task = session.get(Task.class, id);
-            if (task != null) {
-                session.delete(task);
-            } else {
-                return false;
-            }
-
-        } catch (HibernateException e) {
-            e.printStackTrace();
-        } finally {
-            session.getTransaction().commit();
+        task = session.get(Task.class, id);
+        if (task != null) {
+            session.delete(task);
+        } else {
+            return false;
         }
         return true;
     }
 
     @Override
     public ArrayList<Task> getAll() {
-        List<Task> taskList = null;
-        try {
-            session = factory.getCurrentSession();
-            session.beginTransaction();
-            taskList = session.createQuery("select s from Task s", Task.class).getResultList();
-        } catch (HibernateException e) {
-            e.printStackTrace();
-        } finally {
-            session.getTransaction().commit();
-        }
+        Session session = factory.getCurrentSession();
+        List<Task> taskList = Collections.emptyList();
+        taskList = session.createQuery("select s from Task s", Task.class).getResultList();
         return (ArrayList<Task>) taskList;
     }
 
     @Override
     public ArrayList<Task> getTasksByStatus(Task.Status status) {
+        Session session = factory.getCurrentSession();
         List<Task> taskList = null;
-        try {
-            session = factory.getCurrentSession();
-            session.beginTransaction();
-            taskList = session.createQuery("select s from Task s where s.statusName = :statusName", Task.class)
-                    .setParameter("statusName", status.getRusTitle())
-                    .getResultList();
-        } catch (HibernateException e) {
-            e.printStackTrace();
-        } finally {
-            session.getTransaction().commit();
-        }
+        taskList = session.createQuery("select s from Task s where s.statusName = :statusName", Task.class)
+                 .setParameter("statusName", status.getRusTitle())
+                 .getResultList();
         return (ArrayList<Task>) taskList;
     }
 
     @Override
     public void setTaskStatus(Long id, Task.Status status) {
+        Session session = factory.getCurrentSession();
         Task task;
-        try {
-            session = factory.getCurrentSession();
-            session.beginTransaction();
-            task = session.get(Task.class, id);
-            task.setStatus(status);
-            session.update(task);
-        } catch (HibernateException e) {
-            e.printStackTrace();
-        } finally {
-            session.getTransaction().commit();
-        }
+        task = session.get(Task.class, id);
+        task.setStatus(status);
+        session.update(task);
     }
 
     @Override
