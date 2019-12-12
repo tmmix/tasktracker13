@@ -2,32 +2,31 @@ package com.ert.java.training.tasktracker.services;
 
 import com.ert.java.training.tasktracker.entities.Task;
 import com.ert.java.training.tasktracker.TaskException;
+import com.ert.java.training.tasktracker.repositories.HibernateTaskRepository;
 import com.ert.java.training.tasktracker.repositories.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 @Service
+@Transactional
 public class TaskService {
-    private TaskRepository taskRepository;
-
-    public TaskService() {
-    }
-
-    public TaskService(TaskRepository taskRepository) {
-        this.taskRepository = taskRepository;
-    }
+    private HibernateTaskRepository taskRepository;
 
     @Autowired
-    @Qualifier(value = "hibernateTaskRepository")
-    public void setTaskRepository(TaskRepository taskRepository) {
+    public void setTaskRepository(HibernateTaskRepository taskRepository) {
         this.taskRepository = taskRepository;
     }
 
-    public void addTask(Task newTask) {
+    public List<Task> getTaskList() {
+        return taskRepository.getAll();
+    }
+
+/*    public void addTask(Task newTask) {
         if (taskRepository.getTaskById(newTask.getId()) != null) {
             throw new TaskException("Задача " + newTask.getId() + ": " + newTask.getTitle() + " уже существует");
         }
@@ -36,10 +35,6 @@ public class TaskService {
         } else {
             throw new TaskException("Ошибка добавления задачи " + newTask.getId() + ": " + newTask.getTitle());
         }
-    }
-
-    public List<Task> getTaskList() {
-        return taskRepository.getAll();
     }
 
     public void printTaskList() {
@@ -122,7 +117,7 @@ public class TaskService {
         }
         System.out.println("Из файла " + filename + " загружено задач: " + objCnt);
         return taskList;
-    }
+    }*/
 
 
 }
