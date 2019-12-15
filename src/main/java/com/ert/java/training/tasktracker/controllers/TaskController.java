@@ -17,17 +17,22 @@ import java.util.List;
 @Controller
 @RequestMapping("/tasks")
 public class TaskController {
-    private HibernateTaskRepository hibernateTaskRepository;
+    private TaskService taskService;
 
     @Autowired
-    public void setHibernateTaskRepository(HibernateTaskRepository hibernateTaskRepository) {
-        this.hibernateTaskRepository = hibernateTaskRepository;
+    public void setTaskService(TaskService taskService) {
+        this.taskService = taskService;
     }
 
     @GetMapping("/info")
-//    @ResponseBody
-    public String showInfoPage(Model model, @RequestParam(value = "title", required = false) String title) {
-        model.addAttribute("task", new Task(3L, title, "Owner", "Executor", "description", Task.Status.CREATED));
-        return "info";
+    @ResponseBody
+    public List<Task> showInfoPage() {
+        return taskService.getTaskList();
+    }
+
+    @GetMapping("/taskinfo")
+    public String showTaskPage(Model model, @RequestParam(value = "taskid", required = true) Long taskId) {
+        model.addAttribute("task", taskService.getTask(taskId));
+        return "taskinfo";
     }
 }

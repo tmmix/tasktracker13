@@ -16,7 +16,6 @@ import java.util.List;
 @Transactional
 public class TaskService {
     private HibernateTaskRepository taskRepository;
-
     @Autowired
     public void setTaskRepository(HibernateTaskRepository taskRepository) {
         this.taskRepository = taskRepository;
@@ -26,7 +25,7 @@ public class TaskService {
         return taskRepository.getAll();
     }
 
-/*    public void addTask(Task newTask) {
+    public void addTask(Task newTask) {
         if (taskRepository.getTaskById(newTask.getId()) != null) {
             throw new TaskException("Задача " + newTask.getId() + ": " + newTask.getTitle() + " уже существует");
         }
@@ -117,7 +116,7 @@ public class TaskService {
         }
         System.out.println("Из файла " + filename + " загружено задач: " + objCnt);
         return taskList;
-    }*/
+    }
 
 
 }

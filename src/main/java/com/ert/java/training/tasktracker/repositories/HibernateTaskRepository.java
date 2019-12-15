@@ -36,7 +36,7 @@ public class HibernateTaskRepository {
         return taskList;
     }
 
-    /*public boolean createTask(Task newTask) {
+    public boolean createTask(Task newTask) {
         Session session = factory.getCurrentSession();
         session.save(newTask);
         return true;
@@ -89,5 +89,5 @@ public class HibernateTaskRepository {
 
     public long countTasksByStatus(Task.Status status) {
         return getTasksByStatus(status).size();
-    }*/
+    }
 }
